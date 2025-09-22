@@ -1,6 +1,6 @@
-# Importing pytest and get_word_count from task6 source file
+# Importing pytest and open_file() from task6 source file
 import pytest
-from task6 import get_word_count
+from task6 import open_file
 
 @pytest.mark.parametrize("filename, expected", [('task6_read_me.txt', 104), ('example1.txt', 7),
 ('example2.txt', 13)])
@@ -14,19 +14,19 @@ def test_word_count_accuracy(filename, expected):
     
     """
 
-    wordCount = get_word_count(filename)
+    word_count = open_file(filename)
 
-    assert wordCount == expected, f'Expected word count of {expected}'
+    assert word_count == expected, f'Expected word count of {expected}'
 
 def test_word_count_not_found():
     """Ensures error is raised when file isn't found"""
 
     with pytest.raises(FileNotFoundError):
-        get_word_count('not_a_file.txt')
+        open_file('not_a_file.txt')
 
 def test_word_count_wrong_type():
     """Ensures error raised when wrong type passed for filename"""
     
     with pytest.raises(TypeError):
-        get_word_count(10)
+        open_file(10)
 
