@@ -3,6 +3,10 @@ Before running anything:
       Or if accessing from your own machine:
         - Create a new virtual environment (python3 -m venv your_custom_env_name_here --system-site-packages in terminal)
         - Activate the environment (source your_custom_env_name_here/bin/activate in terminal)
+        - Run the command: pip install -r requirements.txt
+
+        OR, manually
+
         - Install pytest with pip (python3 -m pip install pytest in terminal)
         - Install BeautifulSoup4 with pip (python3 -m pip install BeautifulSoup4 in terminal)
 
