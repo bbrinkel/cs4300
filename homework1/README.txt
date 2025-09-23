@@ -1,6 +1,9 @@
 Before running anything:
-    - Ensure homework1_virtual_env is activated (source homework1_virtual_env/bin/activate in terminal, in the homework1 directory)
-      Or if you want to create a new virtual environment:
+    Ensure homework1_virtual_env is activated:
+        - In the homework1 directory type the command source homework1_virtual_env/bin/activate
+
+      Or if you want to create a new virtual environment (If the virtual environment is buggy, 
+      I ran into bugs trying it on my local system, but I might just have dependency issues):
         - Create a new virtual environment (python3 -m venv your_custom_env_name_here --system-site-packages in terminal)
         - Activate the environment (source your_custom_env_name_here/bin/activate in terminal)
         - Change directories to homework1 and run the command: python3 -m pip install -r requirements.txt
@@ -12,7 +15,7 @@ Before running anything:
 
 To run each task:
     1) Open the terminal
-    2) Change to the src directory (cd /homework1/src in terminal)
+    2) Change to the src directory (cd homework1/src in terminal)
     3) In the terminal type the command: python3 taskX.py (with X being the number of the task you want to run) 
 
 To run the tests for each task:
