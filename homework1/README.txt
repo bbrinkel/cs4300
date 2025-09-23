@@ -1,14 +1,14 @@
 Before running anything:
-    - Ensure MyVirtEnv1 is activated (source MyVirtEnv1/bin/activate in terminal)
-      Or if accessing from your own machine:
+    - Ensure homework1_virtual_env is activated (source homework1_virtual_env/bin/activate in terminal, in the homework1 directory)
+      Or if you want to create a new virtual environment:
         - Create a new virtual environment (python3 -m venv your_custom_env_name_here --system-site-packages in terminal)
         - Activate the environment (source your_custom_env_name_here/bin/activate in terminal)
-        - Change directories to homework1 and run the command: pip install -r requirements.txt
+        - Change directories to homework1 and run the command: python3 -m pip install -r requirements.txt
 
         OR, manually
 
-        - Install pytest with pip (python3 -m pip install pytest in terminal)
-        - Install BeautifulSoup4 with pip (python3 -m pip install BeautifulSoup4 in terminal)
+            - Install pytest with pip (python3 -m pip install pytest in terminal)
+            - Install BeautifulSoup4 with pip (python3 -m pip install BeautifulSoup4 in terminal)
 
 To run each task:
     1) Open the terminal
