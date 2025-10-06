@@ -21,6 +21,8 @@ from bookings import views
 
 router = routers.DefaultRouter()
 router.register(r'movies', views.MovieViewSet)
+router.register(r'seats', views.SeatViewSet)
+router.register(r'bookings', views.BookingViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),

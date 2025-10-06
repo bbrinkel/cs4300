@@ -1,0 +1,47 @@
+{% extends 'bookings/base.html' %}
+{% block title %} Booking History {% endblock %}
+{% block content %}
+  <h2>Booking History</h2>
+  {% if user %}
+    <ul class="list-group">
+      {% for booking in bookings %}
+        <li class="list-group-item bg-primary mb-2 text-white d-flex justify-content-between align-items-center border border-secondary border-3">
+          <div>
+            <h5>Movie: {{ booking.movie.title }}</h5>
+            <p>Seat Number: {{ booking.seat.seat_number }}</p>
+            <small>Date Booked: {{ booking.booking_date }}</small>
+          </div>
+          <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm d-flex flex-column align-items-center justify-content-center" style="width:90px; height:30px;"
+           onclick="this.classList.add('disabled'); this.innerText='Removing...'; return true;">Remove</a>
+        </li>
+      {% empty %}
+        <li class="list-group-item bg-primary mb-2 text-white d-flex justify-content-between align-items-center border border-secondary border-3">No Bookings found.</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'booking_history' %}" class="btn btn-secondary mt-3">Find Other User History</a>
+
+  {% else %}
+    {% if form.errors %}
+      <div class="alert alert-danger">
+          Please correct the following errors:
+          <ul>
+              {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                  <li><strong>{{ field|capfirst }}:</strong> {{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+          </ul>
+      </div>
+    {% endif %}
+
+    <!-- For entering your name to see history -->
+    <form method="POST">
+    {% csrf_token %}
+      <div class="mb-3">
+        <label for="user" class="form-label">Enter your name:</label>
+        <input type="text" id="user" name="user" class="form-control" placeholder="Your name" required>
+      </div>
+      <button type="submit" class="btn btn-primary m-1"> Submit </button>
+    </form>
+  {% endif %}
+{% endblock %}

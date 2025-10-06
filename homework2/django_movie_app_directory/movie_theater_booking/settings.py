@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*nh^i7)l_^z#@39bmy=km9j#=*r&=6r@*1rvz$zclka$*8i8$n
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'app-brackencontainer-19.devedu.io'
+    'app-brackencontainer-19.devedu.io',
 ]
 
 
@@ -42,6 +42,13 @@ INSTALLED_APPS = [
     'bookings.apps.BookingsConfig',
     'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -101,6 +108,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://app-brackencontainer-19.devedu.io",
 ]
 
 

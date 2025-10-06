@@ -6,9 +6,15 @@ class Movie(models.Model):
     release_date =  models.DateTimeField()
     duration = models.DurationField()
 
+    def __str__(self): 
+        return self.title
+
 class Seat(models.Model):
-    seat_number = models.IntegerField(default=0)
+    seat_number = models.CharField(max_length=2)
     booking_status = models.BooleanField(default=False)
+
+    def __str__(self): 
+        return self.seat_number
 
 class Booking(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)

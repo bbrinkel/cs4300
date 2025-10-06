@@ -9,15 +9,26 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SeatSerializer(serializers.ModelSerializer):
-    """Serializer for helping convert Seat model to JSON and vice versa"""
+    movie = serializers.SlugRelatedField(queryset=Movie.objects.all(), slug_field='title', required=True, write_only=True)
+    user = serializers.CharField(max_length=50, required=True, write_only=True)
+
     class Meta:
         model = Seat
         fields = '__all__'
+        read_only_fields = ['booking_status']
 
 class BookingSerializer(serializers.ModelSerializer):
     """Serializer for helping convert Booking model to JSON and vice versa"""
+    movie_title = serializers.SlugRelatedField(queryset=Movie.objects.all(), slug_field='title', required=True, write_only=True)
+    seat_number = serializers.CharField(max_length=2, required=True, write_only=True)
+
+    movie = serializers.StringRelatedField()
+    seat = serializers.StringRelatedField()
+
     class Meta:
         model = Booking
         fields = '__all__'
+        read_only_fields = ['movie', 'seat', 'booking_date'] 
+
 
     

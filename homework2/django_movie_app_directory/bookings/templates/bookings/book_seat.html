@@ -1,0 +1,60 @@
+{% extends 'bookings/base.html' %}
+{% block title %}Book Seats{% endblock %}
+
+{% block content %}
+<h2>Select a Seat for {{ movie.title }}</h2>
+
+<!-- When submitting the form, puts it under the POST method -->
+<form method='POST'>
+    <!-- Security -->
+    {% csrf_token %}
+
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            Please correct the following errors:
+            <ul>
+                {% for field, errors in form.errors.items %}
+                  {% for error in errors %}
+                    <li><strong>{{ field|capfirst }}:</strong> {{ error }}</li>
+                  {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- For entering your name to book the seat -->
+    <div class="mb-3">
+        <label for="user" class="form-label">Enter your name:</label>
+        <input type="text" id="user" name="user" class="form-control" placeholder="Your name" required>
+    </div>
+
+    <!-- Gives border and ensures buttons appear in grid -->
+    <div class="border border-primary bg-secondary rounded p-3 mt-3 text-center">
+        <div class="d-flex flex-wrap justify-content-center">
+            {% for seat in total_seats %}
+
+                <!-- For ensuring grid is 8 x 8 -->
+                {% if forloop.counter0|divisibleby:8 %}
+                    <div class="w-100"></div>
+                {% endif %}
+
+                <!-- if seat is booked, make it gray and disabled -->
+                {% if seat in booked_seat_numbers %}
+                    <button class="btn btn-light m-1 p-0" style="width: 60px; height: 60px; font-size: 1.0rem;" disabled>
+                        <i class="bi bi-person"></i><br>{{ seat }}
+                    </button>
+                <!-- if not make seat button blue and pressable -->
+                {% else %}
+                    <button type="submit" value="{{ seat }}" name="seat_number" class="btn btn-primary m-1 p-0" style="width: 60px; height: 60px; font-size: 1.0rem;">
+                        <i class="bi bi-person"></i><br>{{ seat }}
+                    </button>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="bg-dark text-light py-2 rounded mt-3" style="width: 60%; margin: 0 auto;">
+            SCREEN
+        </div>
+    </div>
+</form>
+{% endblock %}
+    
