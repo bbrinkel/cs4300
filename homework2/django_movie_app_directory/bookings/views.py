@@ -67,7 +67,7 @@ class SeatViewSet(viewsets.ViewSet):
             else:
                 seat_status = 'not booked'
 
-            return Response({"message": f"Seat {seat_number} for {movie_title} is {seat_status}."})
+            return Response({f"Seat {seat_number} for {movie_title} is {seat_status}."})
 
     def create(self, request):
         serializer = SeatSerializer(data=request.data)
@@ -93,7 +93,7 @@ class SeatViewSet(viewsets.ViewSet):
 
         new_booking = Booking.objects.create(movie=movie, seat=seat, user=user, booking_date=timezone.now())
 
-        return Response({"message": "Seat successfully booked!"}, status=status.HTTP_201_CREATED)
+        return Response({"Seat successfully booked!"}, status=status.HTTP_201_CREATED)
 
 class BookingViewSet(viewsets.ViewSet):
     """Booking Viewset, allows for looking at the history of previous bookings and making new ones"""
@@ -116,7 +116,7 @@ class BookingViewSet(viewsets.ViewSet):
         serializer = BookingSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        movie = serializer.validated_data['movie']
+        movie = serializer.validated_data['movie_title']
         seat_number = serializer.validated_data['seat_number']
         user = serializer.validated_data['user']
 
@@ -136,7 +136,7 @@ class BookingViewSet(viewsets.ViewSet):
 
         new_booking = Booking.objects.create(movie=movie, seat=seat, user=user, booking_date=timezone.now())
 
-        return Response({"message": "Seat successfully booked!"}, status=status.HTTP_201_CREATED)
+        return Response({"Seat successfully booked!"}, status=status.HTTP_201_CREATED)
 
 # For HTML Rendering
 def movie_list_view(request):

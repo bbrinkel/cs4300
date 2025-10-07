@@ -95,4 +95,114 @@ class MovieListSingleTest(APITestCase):
         self.assertEqual(response.data[0]['duration'], "02:15:00")
 
 class SeatEndpointTests(APITestCase):
-    testDate =
+    testDate = timezone.now() - timedelta(days=10)
+
+    # Sets up movie to be tested
+    def setUp(self):
+        self.movie = Movie.objects.create(title="Avatar", description="Sci-Fi", 
+            release_date = self.testDate, duration = timedelta(hours=2, minutes=15))
+        self.seat = Seat.objects.create(seat_number="A1", booking_status=True)
+        self.url = reverse('seat-list')
+
+    def test_list_seats(self):
+        """Ensure the seat endpoint returns seats"""
+
+        response = self.client.get(self.url + '?movie=Avatar&seat=A1')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, {"Seat A1 for Avatar is not booked."})
+
+    def test_book_seat(self):
+        """Test booking a seat"""
+
+        data = {
+            "movie": self.movie.title,
+            "seat_number": self.seat.seat_number, 
+            "user": "John"
+        }
+        response = self.client.post(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data, {"Seat successfully booked!"})
+
+    def test_double_booking_rejected(self):
+        """Ensure booking a taken seat fails"""
+        Booking.objects.create(
+            movie=self.movie,
+            seat=self.seat,
+            user="Bob",
+            booking_date=timezone.now()
+        )
+        data = {"seat_number": "A1", "user": "Charlie", "movie": "Matrix"}
+        response = self.client.post(self.url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+class BookingEndpointTests(APITestCase):
+    """Tests for the Booking API endpoints"""
+    def setUp(self):
+        self.testDate = timezone.now() - timedelta(days=10)
+        self.movie = Movie.objects.create(
+            title="Avatar",
+            description="Sci-Fi",
+            release_date=self.testDate,
+            duration=timedelta(hours=2, minutes=15)
+        )
+
+        self.booking_url = reverse('booking-list')  # DRF router auto-names this
+        self.user = "John"
+
+    def test_create_booking_success(self):
+        """Ensure a booking can be successfully created"""
+        data = {
+            "movie_title": self.movie.title,
+            "seat_number": "A1",
+            "user": self.user,
+        }
+
+        response = self.client.post(self.booking_url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data, {"Seat successfully booked!"})
+        self.assertTrue(Booking.objects.filter(user=self.user, movie=self.movie).exists())
+
+    def test_double_booking_rejected(self):
+        """Ensure booking the same seat twice for the same movie fails"""
+        # First booking
+        Booking.objects.create(
+            movie=self.movie,
+            seat=Seat.objects.create(seat_number="A1", booking_status=True),
+            user=self.user,
+            booking_date=timezone.now()
+        )
+
+        # Try to book again
+        data = {
+            "movie_title": self.movie.title,
+            "seat_number": "A1",
+            "user": "Jane",
+        }
+
+        response = self.client.post(self.booking_url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("already booked", str(response.data))
+
+    def test_list_user_bookings(self):
+        """Ensure listing a user's bookings works"""
+        seat = Seat.objects.create(seat_number="B2", booking_status=True)
+        Booking.objects.create(
+            movie=self.movie,
+            seat=seat,
+            user=self.user,
+            booking_date=timezone.now()
+        )
+
+        url = f"{self.booking_url}?user={self.user}"
+        response = self.client.get(url, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['movie'], "Avatar")
+        self.assertEqual(response.data[0]['seat'], "B2")
+
+
+
+
