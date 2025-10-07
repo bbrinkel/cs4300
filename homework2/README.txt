@@ -86,6 +86,10 @@ For running tests:
     - Still being in the django_movie_app_directory, type the command './manage.py test'
     - This will go through various test cases, testing the various models and API endpoints.
 
+I would like to cite chatGPT for helping me figure out a lot of things in this assignment. I did of course
+read and use various documentation sources, but chatGPT helped me figure out lots of things about viewsets,
+serializers, html, bootstrap, and was very big in helping me with testcases.
+
         
 
         
