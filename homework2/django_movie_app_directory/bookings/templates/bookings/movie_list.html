@@ -2,14 +2,17 @@
 {% block title %} Movie List {% endblock %}
 {% block content %}
   <h2>Available Movies</h2>
+  <!-- Creates list of movies entered in DB -->
   <ul class="list-group">
     {% for movie in movies %}
       <li class="list-group-item bg-primary mb-2 text-white d-flex justify-content-between align-items-center border border-secondary border-3">
         <div>
+          <!-- Includes movie details -->
           <h5>{{ movie.title }}</h5>
           <p>{{ movie.description }}</p>
           <small>Release: {{ movie.release_date }} | Duration: {{ movie.duration }} mins</small>
         </div>
+        <!-- Button for booking now, sends to book_seats page -->
         <a href="{% url 'book_seat' movie.id %}" class="btn btn-dark d-flex flex-column align-items-center justify-content-center" style="width:150px; height:30px;">Book Now</a>
       </li>
     {% empty %}

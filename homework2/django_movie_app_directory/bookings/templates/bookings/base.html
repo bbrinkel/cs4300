@@ -2,14 +2,18 @@
 <html>
 <head>
     <title>{% block title %}My Site{% endblock %}</title>
+    <!-- For ensuring responsive design -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- For bootstrap CSS and Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 <body style="background-color: #D3D3D3;">
+    <!-- Navigation bar for each screen -->
     <nav class="navbar bg-dark">
         <div class="container justify-content-start my-4">
             <h1 class="text-white me-5">Navigation:</h1>
+            <!-- Buttons for visiting movie_list or booking_history pages -->
             <a href="{% url 'movie_list' %}" class="btn btn-primary me-2">Movies</a>
             <a href="{% url 'booking_history' %}" class="btn btn-secondary">History</a>
         </div>
@@ -20,6 +24,7 @@
         {% endblock %}
     </div>
 
+    <!-- For bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

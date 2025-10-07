@@ -9,6 +9,7 @@
     <!-- Security -->
     {% csrf_token %}
 
+    <!-- Lists all errors from form at top of page to tell the user what to fix -->
     {% if form.errors %}
         <div class="alert alert-danger">
             Please correct the following errors:
@@ -51,6 +52,7 @@
                 {% endif %}
             {% endfor %}
         </div>
+        <!-- For Screen bar at bottom -->
         <div class="bg-dark text-light py-2 rounded mt-3" style="width: 60%; margin: 0 auto;">
             SCREEN
         </div>

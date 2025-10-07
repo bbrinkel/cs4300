@@ -1,6 +1,8 @@
+# Needed imports
 from django.urls import path
 from . import views
 
+# Various URL patterns for navigating around the project (Some may not render a new page)
 urlpatterns = [
     path('', views.movie_list_view, name='movie_list'),
     path('book/<int:movie_id>/', views.book_seat_view, name='book_seat'),

@@ -2,15 +2,20 @@
 {% block title %} Booking History {% endblock %}
 {% block content %}
   <h2>Booking History</h2>
+  <!-- If user argument, show list of bookings of User -->
   {% if user %}
     <ul class="list-group">
       {% for booking in bookings %}
+      
         <li class="list-group-item bg-primary mb-2 text-white d-flex justify-content-between align-items-center border border-secondary border-3">
           <div>
+            <!-- Show details of Booking -->
             <h5>Movie: {{ booking.movie.title }}</h5>
             <p>Seat Number: {{ booking.seat.seat_number }}</p>
             <small>Date Booked: {{ booking.booking_date }}</small>
           </div>
+          <!-- For canceling a shown booking, includes small JS for ensuring button cannot be spammed -->
+
           <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm d-flex flex-column align-items-center justify-content-center" style="width:90px; height:30px;"
            onclick="this.classList.add('disabled'); this.innerText='Removing...'; return true;">Remove</a>
         </li>
@@ -18,9 +23,12 @@
         <li class="list-group-item bg-primary mb-2 text-white d-flex justify-content-between align-items-center border border-secondary border-3">No Bookings found.</li>
       {% endfor %}
     </ul>
+    <!-- To find booking history of a User based on name -->
     <a href="{% url 'booking_history' %}" class="btn btn-secondary mt-3">Find Other User History</a>
 
+  <!-- If no user argument -->
   {% else %}
+    <!-- Print all errors of form at top of screen -->
     {% if form.errors %}
       <div class="alert alert-danger">
           Please correct the following errors:
